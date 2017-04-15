@@ -18,7 +18,7 @@ public void MoveToRail (Rail ra){ // következő sínre mozgat
 				hasPassengers = false;
 				if(behindMe == null){
 					System.out.println("I was the last carriage, that had people on it! - said the carriage with a happy smile on its face");
-					Main.EmptyTrainCounterPlusPlus();
+					Program.EmptyTrainCounterPlusPlus();
 				}
 			}
 		}
