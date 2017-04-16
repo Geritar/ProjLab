@@ -4,11 +4,10 @@ public abstract class TrainPart {
 	public TrainPart(){
 
 	}
-TrainPart behindMe;
-TrainPart inFrontOfMe;
-Rail currentRail;
-boolean hasPassengers = true;
-Color myColor;
+protected TrainPart behindMe;
+protected TrainPart inFrontOfMe;
+protected Rail currentRail;
+protected boolean hasPassengers ;
 
 	public  void MoveToRail (Rail next){
 		Rail tmp=currentRail; // tmpbe tároljuk azt a sínt ahonnan ellépünk
@@ -20,7 +19,6 @@ Color myColor;
 			// ha van mögötte kocsi akkor rekurzívan azon is meghívjuk a mozgatást
 		}
 		currentRail.AddTrainToRail(this); // az új sínen a vonatot is eltároljuk
-		currentRail.GetOffTheTrain(); // leszállnak utasok ha letudnak
 
 	}
 	public boolean HasPassenger (){// űlnek e a vonaton
@@ -30,9 +28,6 @@ Color myColor;
 	public boolean HasNextTrain(){
 		return behindMe!=null;
 		//ellenőrzii hogy van e mögötte vonat
-	}
-	public void move(){
-
 	}
 
 

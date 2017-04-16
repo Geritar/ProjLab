@@ -26,7 +26,6 @@ Add Gate
 7.1 Nyert a j�t�kos ? Y/N
 8. Level Complete
 8.1 Van k�vetkez� p�lya? Y/N
-
  */
 
 public class Program {
@@ -164,8 +163,9 @@ public class Program {
         Emptytraincount++;
         m.NextLevel();
     }
-    static public void EmptyTrainCounterMinus(){
 
+    static public void EmptyTrainCounterMinus(){
+Emptytraincount--;
 
     }
 }
