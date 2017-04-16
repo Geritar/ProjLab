@@ -35,10 +35,11 @@ public class Program {
     public int currentLevel = 0;
     static int Emptytraincount = 0;
     public ArrayList<Level> levels = new ArrayList<Level>();
+    static public Program m;
     //public ArrayList<Level> levelList = new ArrayList<Level>();
 
     static public void main (String[] args){
-        Program m = new Program();
+        m = new Program();
         m.Init();
         try {
             InputStreamReader isr = new InputStreamReader(System.in);
@@ -161,5 +162,6 @@ public class Program {
     }
     static public void EmptyTrainCounterPlusPlus (){
         Emptytraincount++;
+        m.NextLevel();
     }
 }
