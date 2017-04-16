@@ -19,8 +19,6 @@ protected boolean hasPassengers ;
 			// ha van mögötte kocsi akkor rekurzívan azon is meghívjuk a mozgatást
 		}
 		currentRail.AddTrainToRail(this); // az új sínen a vonatot is eltároljuk
-		currentRail.GetOffTheTrain(); // leszállnak utasok ha letudnak
-
 
 	}
 	public boolean HasPassenger (){// űlnek e a vonaton
