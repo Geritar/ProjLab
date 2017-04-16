@@ -1,80 +1,116 @@
 package sheldon;
 
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Level {
-	public Level(){
-	}
 	public ArrayList<Rail> rails = new ArrayList<Rail>();
-	public ArrayList<Carriage> carriges = new ArrayList<Carriage>();
-	public ArrayList<Engine> engines = new ArrayList<Engine>();
+	public ArrayList<TrainPart> trainparts = new ArrayList<TrainPart>();
 	public UnderPassCreator u_p_c;
-	
-	public void Generate(){
-		//Legenerálja a kódja alapján a pályát.
-		Rail a = new Rail();
-		rails.add(a);
-		Rail b = new Rail();
-		rails.add(b);
-		Rail c = new Rail();
-		rails.add(c);
-		Engine k = new Engine();
-		engines.add(k);
-		Carriage v = new Carriage();
-		carriges.add(v);
-		Rail eh = new Switch();
-		rails.add(eh);
-		u_p_c = new UnderPassCreator();
-		Rail h = new Station();
-		rails.add(h);
-		Rail sp2 = new SpecialRail();
-		rails.add(sp2);
-		Rail sp1 = new SpecialRail();
-		rails.add(sp1);
-		//szimpla összekötés most
-		a.neighbours[0] = b;
-		a.neighbours[1] = sp1;
-		b.neighbours[0] = a;
-		b.neighbours[1] = c;
-		c.neighbours[0] = b;
-		c.neighbours[1] = eh;
-		c.neighbours[0] = b;
-		c.neighbours[1] = eh;
-		eh.neighbours[0] = c;
-		eh.neighbours[1] = h;
-		h.neighbours[0] = eh;
-		h.neighbours[1] = sp2;
-		sp2.neighbours[0] = h;
-		sp2.neighbours[1] = sp1;
-		sp1.neighbours[0] = a;
-		sp1.neighbours[1] = sp2;
-		k.behindMe = v;
-		k.currentRail = a;
-		k.hasPassengers = false;
-		v.currentRail = b;
-		v.hasPassengers = true;
-		v.myColor = Color.RED;
-		v.inFrontOfMe = k;
-		h.changecolor(Color.RED);
+
+	public Level(String levelname, String trainname){
+		try (BufferedReader br = new BufferedReader(new FileReader(levelname))) {
+
+			String CurrentLine;
+
+			/*első paramétere a sín ID-ja
+			második paramétere: melyik sín van előtte
+			harmadik paramétere: melyik sín van utána
+			negyedik paramétere: A sín típusa (1-Rail, 2-SpecialRail, 3-Switch, 4- station, 5-Cross)
+			ötödik paraméter: Szín (csak a stationnek lehet)*/
+
+			while ((CurrentLine = br.readLine()) != null) {
+				String[] splitted = CurrentLine.split(" ");
+				Rail temprail = null;
+				if(Integer.parseInt(splitted[3]) == 1){
+					temprail = new Rail();
+				}
+				if(Integer.parseInt(splitted[3]) == 2){
+					temprail = new SpecialRail();
+				}
+				if(Integer.parseInt(splitted[3]) == 3){
+					temprail = new Switch();
+				}
+				if(Integer.parseInt(splitted[3]) == 4){
+					temprail = new Station();
+					temprail.changecolor(Color.valueOf(splitted[4]));
+				}
+				if(Integer.parseInt(splitted[3]) == 5){
+					temprail = new Crossing();
+				}
+				temprail.neighbours[0] = rails.get(Integer.parseInt(splitted[1]) -1);
+				temprail.neighbours[1] = rails.get(Integer.parseInt(splitted[2]) -1);
+				rails.add(temprail);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try (BufferedReader br = new BufferedReader(new FileReader(levelname))) {
+
+			String CurrentLine;
+			/*
+			első paramétere: a mozdony Id-ja
+			második paraméter: a mozdony melyik sínen van
+			harmadik típusa: mi van előtte
+			negyedik paraméter: mi van mögöttem
+			ötödik paraméter: 1- Engine, 2- Carriage, 3 CoalCargo
+			hatodik paraméter: szín
+			hetedik paraméter: Van-e rajta utas  :  1-van, 0-nincs*/
+			ArrayList<String> readed = new ArrayList<String>();
+			while ((CurrentLine = br.readLine()) != null) {
+				readed.add(CurrentLine);
+				String[] splitted = CurrentLine.split(" ");
+					TrainPart train = null;
+				if(Integer.parseInt(splitted[5]) == 1){//engine
+					train = new Engine();
+				}
+				if(Integer.parseInt(splitted[5]) == 2){ //carriage
+					train = new Carriage();
+
+				}
+				if(Integer.parseInt(splitted[5]) == 3){ //CoalCargo
+					train = new CoalCargo();
+				}
+				train.currentRail = rails.get(Integer.parseInt(splitted[1]) - 1);
+				train.hasPassengers = Integer.parseInt(splitted[6]) == 1;
+				train.myColor = Color.valueOf(splitted[5]);
+				train.inFrontOfMe = null;
+				train.behindMe = null;
+				trainparts.add(train);
+
+			}
+			for(int i = 0; i < readed.size(); i++){
+				String[] splitted = readed.get(i).split(" ");
+				if(Integer.parseInt(splitted[2]) != 0){
+					trainparts.get(i).inFrontOfMe = trainparts.get(Integer.parseInt(splitted[2]) -1 );
+				}
+				if(Integer.parseInt(splitted[3]) != 0){
+					trainparts.get(i).behindMe = trainparts.get(Integer.parseInt(splitted[3]) -1 );
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
-	
-	public void Destroy(){
-		System.out.println("Level has been destroyed!");
-	}
+
+
+
 	
 	public void MoveEngines(){ // az összes mozdonynak meghívja a move függvényét ezzel mozgatja a vonatokat a sineken
 		System.out.println("Engines are being moved");
-		for(int i = 0; i < engines.size(); i++){
-			engines.get(i).Move();
+		for(int i = 0; i < trainparts.size(); i++){
+			trainparts.get(i).move();
 		}
 	}
-	
-	public boolean emptyCheck (TrainPart a){
-		System.out.println("TrainPart is empty!");
-			return true;
-		}
+
 	
 	public int GetEngineCount(){
-		return engines.size();
+		return trainparts.size();
 	}
 }
