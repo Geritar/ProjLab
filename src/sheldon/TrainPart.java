@@ -9,13 +9,27 @@ TrainPart inFrontOfMe;
 Rail currentRail;
 boolean hasPassengers = true;
 
-	public abstract void MoveToRail (Rail r);
-	public boolean HasPassenger (){// ülnek e a vonaton
+	public  void MoveToRail (Rail next){
+		Rail tmp=currentRail; // tmpbe tároljuk azt a sínt ahonnan ellépünk
+		currentRail=next; // a current rail az lesz ahová lépünk
 
+		tmp.Clear(); // lelépünk az előző sínről
+		if(HasNextTrain()){
+			MoveToRail(tmp);
+			// ha van mögötte kocsi akkor rekurzívan azon is meghívjuk a mozgatást
+		}
+		currentRail.AddTrainToRail(this); // az új sínen a vonatot is eltároljuk
+		currentRail.GetOffTheTrain(); // leszállnak utasok ha letudnak
+
+	}
+	public boolean HasPassenger (){// űlnek e a vonaton
 		System.out.println("This carriage has passangers : " + hasPassengers);
 		return hasPassengers;
 	}
 	public boolean HasNextTrain(){
 		return behindMe!=null;
+		//ellenőrzii hogy van e mögötte vonat
 	}
+
+
 }

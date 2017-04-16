@@ -22,6 +22,6 @@ public void MoveToRail (Rail ra){ // következő sínre mozgat
 				}
 			}
 		}
-		ra.AddTrainToRail();// hozzádha a kocsit a sínhez
+		//ra.AddTrainToRail();// hozzádha a kocsit a sínhez
 }
 }

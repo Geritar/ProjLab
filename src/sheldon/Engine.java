@@ -33,7 +33,8 @@ public Engine(){
         else{
             return current.neighbours[0];
             // ha annak a sínnek amin éppen áll a mozdony egyik szomszédja nem egyezik meg a mögötte álló kocsi aktuális sínével
-            //akkor a ő lesz a következő sín
+            //akkor  ő lesz a következő sín
+
         }
     }
 }

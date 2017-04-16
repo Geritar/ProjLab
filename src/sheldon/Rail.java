@@ -5,6 +5,9 @@ public class Rail {
 	}
 	Rail[] neighbours = new Rail[2];
 	TrainPart myTrainPart;
+	public boolean  GetOffTheTrain(){
+		return false; // egy sima railnél sose szállhatnak le
+	}
 	
 	public Rail GetNextRail (){ // a sín megmondja a trainpartnak hogy mi az ő szomszédja hova kell lépni
 		System.out.println("Next rail has been given to another trainpart! - told the wise old rail");
