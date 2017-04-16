@@ -8,6 +8,7 @@ TrainPart behindMe;
 TrainPart inFrontOfMe;
 Rail currentRail;
 boolean hasPassengers = true;
+Color myColor;
 
 	public  void MoveToRail (Rail next){
 		Rail tmp=currentRail; // tmpbe tároljuk azt a sínt ahonnan ellépünk
@@ -29,6 +30,9 @@ boolean hasPassengers = true;
 	public boolean HasNextTrain(){
 		return behindMe!=null;
 		//ellenőrzii hogy van e mögötte vonat
+	}
+	public void move(){
+
 	}
 
 

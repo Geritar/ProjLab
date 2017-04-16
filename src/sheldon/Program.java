@@ -31,14 +31,13 @@ Add Gate
 
 public class Program {
     static boolean gameHasStarted = false;
-    public int LevelSzam = 1;
+    public int LevelSzam = 3;
     public int currentLevel = 0;
     static int Emptytraincount = 0;
-    public ArrayList<Level> levelList = new ArrayList<Level>();
+    public ArrayList<Level> levels = new ArrayList<Level>();
     //public ArrayList<Level> levelList = new ArrayList<Level>();
 
     static public void main (String[] args){
-        boolean Fourhaspressed = false;
         Program m = new Program();
         m.Init();
         try {
@@ -56,33 +55,28 @@ public class Program {
                 System.out.println("6 - Start Game");
                 System.out.println("7 - Exit Game");
                 System.out.println("8 - Level Complete(?)");
-                if(Fourhaspressed){
-                    System.out.println("9 - Cheat2WIN");
-                }
                 String line;
                 line = br.readLine();
                 if(line == null) break;
                 switch(line){
                     case "1":
                         if(gameHasStarted)
-                            m.levelList.get(m.currentLevel).rails.get(3).ChangeDirection();
+                            m.levels.get(m.currentLevel).rails.get(3).ChangeDirection();
                         break;
                     case "2":
                         if(gameHasStarted)
-                            m.levelList.get(m.currentLevel).u_p_c.AddGate();
+                            m.levels.get(m.currentLevel).u_p_c.AddGate();
                         break;
                     case "3":
                         if(gameHasStarted)
-                            m.levelList.get(m.currentLevel).u_p_c.RemoveGate();
+                            m.levels.get(m.currentLevel).u_p_c.RemoveGate();
                         break;
                     case "4":
-                        m.levelList.get(m.currentLevel).rails.get(5).ChangeGate();
+                        m.levels.get(m.currentLevel).rails.get(5).ChangeGate();
                         break;
                     case "5":
-                        if(gameHasStarted){
-                            Fourhaspressed = true;
-                            m.levelList.get(m.currentLevel).MoveEngines();
-                        }
+                        if(gameHasStarted)
+                            m.levels.get(m.currentLevel).MoveEngines();
                         break;
                     case "6":
                         m.StartGame();
@@ -93,9 +87,6 @@ public class Program {
                     case "8":
                         if(gameHasStarted)
                             m.NextLevel();
-                        break;
-                    case "9":
-                        m.levelList.get(m.currentLevel).carriges.get(0).MoveToRail(m.levelList.get(m.currentLevel).rails.get(4));
                         break;
                 }
             }
@@ -108,15 +99,22 @@ public class Program {
     public void Init (){
         //Pályák beolvasása
         try{
-            Level mylevel = new Level();
-            levelList.add(mylevel);
+            for(int i = 1; i <= LevelSzam; i++){
+
+                String levelname = "level" + i + ".txt";
+                String trainname = "train" + i + ".txt";
+                Level tmplevel = new Level(levelname, trainname);
+                levels.add(tmplevel);
+            }
+
+
         }catch(Exception e){
 
         }
     }
 
     public void ExitGame (){
-        int engCo = levelList.get(currentLevel).GetEngineCount();
+        int engCo = levels.get(currentLevel).GetEngineCount();
         if(gameHasStarted && Emptytraincount == engCo){	//Ha j�t�kban vagyunk m�g / elindult-e a j�t�k
             System.out.println("You Won!");
         }else{
@@ -132,10 +130,9 @@ public class Program {
     }
 
     public void NextLevel (){
-        int engCo = levelList.get(currentLevel).GetEngineCount();
+        int engCo = levels.get(currentLevel).GetEngineCount();
         if(Emptytraincount == engCo){
             System.out.println("You have completed the level!!! ^_^");
-            levelList.get(currentLevel).Destroy();
             currentLevel++;
             if(currentLevel == LevelSzam){
                 System.out.println("You have completed all the levels! Well done!");
@@ -155,8 +152,6 @@ public class Program {
     }
 
     public void StartGame(){
-        System.out.println("A new Level is being created!");
-        levelList.get(currentLevel).Generate();
         gameHasStarted = true;
     }
 
@@ -165,7 +160,6 @@ public class Program {
         gameHasStarted = false;
     }
     static public void EmptyTrainCounterPlusPlus (){
-        System.out.println("A whole train got empty!");
         Emptytraincount++;
     }
 }

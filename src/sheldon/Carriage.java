@@ -3,7 +3,7 @@ package sheldon;
 public class Carriage extends TrainPart{
 	public Carriage(){
 	}
-Color myColor;
+
 public void MoveToRail (Rail ra){ // következő sínre mozgat
 	System.out.println("I'm being moved to another rail! - said by a carriage");
 	if(behindMe != null){
