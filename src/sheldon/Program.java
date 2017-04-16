@@ -163,4 +163,9 @@ public class Program {
         Emptytraincount++;
         m.NextLevel();
     }
+
+    static public void EmptyTrainCounterMinus(){
+Emptytraincount--;
+
+    }
 }
