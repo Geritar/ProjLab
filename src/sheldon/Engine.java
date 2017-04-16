@@ -13,12 +13,14 @@ public Engine(){
         Rail nextrail;
         Rail tmp = currentRail;
         nextrail=getNextRail(currentRail); // elmentjük a következő sínt
-        currentRail.Clear();
-        nextrail.AddTrainToRail(this); // a következő sínhez beállítjuk a vonatot ráléptetjük
+        tmp.Clear();//lelépünk a sínről
         currentRail=nextrail; // a mozdonynak is megadjuk hogy melyik sinen áll
+
+
         if(HasNextTrain()){
             MoveToRail(tmp); // ha van mögötte kocsi azon meghívjuk a mozgatást
         }
+        currentRail.AddTrainToRail(this); // a következő sínhez beállítjuk a vonatot ráléptetjük
         System.out.println("Engine starts moving the train - cho cho!");
 
 	}
