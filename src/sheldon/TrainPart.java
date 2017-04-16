@@ -1,6 +1,6 @@
 package sheldon;
 
-public class TrainPart {
+public abstract class TrainPart {
 	public TrainPart(){
 
 	}
@@ -9,10 +9,13 @@ TrainPart inFrontOfMe;
 Rail currentRail;
 boolean hasPassengers = true;
 
-	public void MoveToRail (Rail ra){
-	}
+	public abstract void MoveToRail (Rail r);
 	public boolean HasPassenger (){// ülnek e a vonaton
+
 		System.out.println("This carriage has passangers : " + hasPassengers);
 		return hasPassengers;
+	}
+	public boolean HasNextTrain(){
+		return behindMe!=null;
 	}
 }

@@ -14,11 +14,11 @@ public class Rail {
 		System.out.println("sorry, but this isnt a good color match! - complained the rail, even though it didnt have any colors at all");
 		return false;
 	}
-	public void AddTrainToRail (){ // ha egyszerre több vonat lenne a sinen akkor ütközés --> a játék véget ér
+	public void AddTrainToRail (TrainPart tp){ // ha egyszerre több vonat lenne a sinen akkor ütközés --> a játék véget ér
 		if(myTrainPart != null){
-			System.out.println("Trainpart has collided :(, another day without accidents, crap - says the rail while it got sadder and sadder");
+			System.out.println("Trainparts has collided :(, another day without accidents, crap - says the rail while it got sadder and sadder");
 		}else{
-			myTrainPart = new TrainPart();
+			myTrainPart = tp;
 			System.out.println("The given Rail was perfect, noone was on this one!. - thought the rail");
 		}
 	}

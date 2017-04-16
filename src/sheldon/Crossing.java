@@ -7,5 +7,5 @@ public class Crossing {
     //Ez is megy
 
 
-    //Adam commitgdrxsfgedsdwswd
+    //Adam commitgdrxsgedsdwswd
 }
