@@ -2,7 +2,7 @@ package sheldon;
 
 public class Engine extends TrainPart {
 public Engine(){
-
+hasPassengers=false;
 }
 
 	public void MoveToRail(Rail next) {
